@@ -68,7 +68,8 @@ class Scene extends Base {
         }
 
         const group = new fabric.Group(clonedObjects)
-        const component = objectExporter.export(group.toJSON(this.editor.config.propertiesToInclude), frame) as any
+        const jsonStr = group.toJSON(this.editor.config.propertiesToInclude
+        const component = objectExporter.export(jsonStr), frame) as any
         const metadata = component.metadata ? component.metadata : {}
 
         return {

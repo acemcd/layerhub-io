@@ -14,7 +14,7 @@ import {
   IStaticPath,
   IStaticText,
   IStaticVector,
-  IStaticVideo,
+  IStaticVideo
 } from "@layerhub-io/types"
 import { createVideoElement } from "./video-loader"
 
@@ -66,8 +66,17 @@ class ObjectImporter {
 
         const metadata = item.metadata
 
-        const { textAlign, fontFamily, fontSize, charSpacing, lineHeight, text, underline, fill, fontURL } =
-          item as IStaticText
+        const {
+          textAlign,
+          fontFamily,
+          fontSize,
+          charSpacing,
+          lineHeight,
+          text,
+          underline,
+          fill,
+          fontURL
+        } = item as IStaticText
 
         const textOptions = {
           ...baseOptions,
@@ -81,7 +90,7 @@ class ObjectImporter {
           ...(charSpacing && { charSpacing }),
           ...(lineHeight && { lineHeight }),
           metadata,
-          fontURL,
+          fontURL
         }
         // @ts-ignore
         const element = new fabric.StaticText(textOptions)
@@ -112,7 +121,7 @@ class ObjectImporter {
         const element = new fabric.StaticImage(image, {
           ...baseOptions,
           cropX: cropX || 0,
-          cropY: cropY || 0,
+          cropY: cropY || 0
         })
 
         updateObjectBounds(element, options)
@@ -169,12 +178,12 @@ class ObjectImporter {
           baseOptions.height = videoElement.videoHeight
         }
 
-        const element = new fabric.StaticVideo(videoElement, {
+        const element = (new fabric.StaticVideo(videoElement, {
           ...baseOptions,
           src: src,
           duration: videoElement.duration,
-          totalDuration: videoElement.duration,
-        }) as unknown as any
+          totalDuration: videoElement.duration
+        }) as unknown) as any
 
         element.set("time", 10)
         videoElement.currentTime = 10
@@ -193,7 +202,7 @@ class ObjectImporter {
         // @ts-ignore
         const element = new fabric.StaticAudio({
           ...baseOptions,
-          src: src,
+          src: src
         })
         resolve(element)
       } catch (err) {
@@ -212,7 +221,7 @@ class ObjectImporter {
           ...baseOptions,
           // @ts-ignore
           path,
-          fill,
+          fill
         })
 
         updateObjectBounds(element, options)
@@ -258,7 +267,7 @@ class ObjectImporter {
           ...baseOptions,
           fill: fill,
           // @ts-ignore
-          shadow: item.shadow,
+          shadow: item.shadow
         })
 
         resolve(element)
@@ -286,7 +295,7 @@ class ObjectImporter {
           const element = new fabric.StaticVector(objects, opts, {
             ...baseOptions,
             src,
-            colorMap,
+            colorMap
           })
 
           updateObjectBounds(element, options)
@@ -321,13 +330,16 @@ class ObjectImporter {
       originX,
       originY,
       type,
-      preview,
+      preview
     } = item as Required<ILayer>
     let metadata = item.metadata ? item.metadata : {}
     const { fill } = metadata
+    console.log(
+      `getBaseOptions: ${type} ${name} ${id} ${left} ${top} ${width} ${height} ${scaleX} ${scaleY} ${stroke} ${strokeWidth} ${angle} ${opacity} ${flipX} ${flipY} ${skewX} ${skewY} ${originX} ${originY} ${type} ${preview} ${fill}`
+    )
     let baseOptions = {
       id: id ? id : nanoid(),
-      name: name ? name : type,
+      name: name ? this.editor.objects.getUniqueName(name) : this.editor.objects.getUniqueName(type),
       angle: angle ? angle : 0,
       top: inGroup ? top : options.top + top,
       left: inGroup ? left : options.left + left,
@@ -352,7 +364,7 @@ class ObjectImporter {
       strokeMiterLimit: item.strokeMiterLimit ? item.strokeMiterLimit : 4,
       strokeDashOffset: item.strokeDashOffset ? item.strokeMiterLimit : 0,
       metadata: metadata,
-      preview,
+      preview
     }
     return baseOptions
   }

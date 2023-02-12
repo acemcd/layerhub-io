@@ -18,7 +18,7 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "prepublish": "pnpm build",
+    "prepublish": "yarn build",
     "preview": "vite preview --port 5050",
     "typecheck": "vue-tsc --noEmit"
   },
@@ -29,6 +29,10 @@
     "rollup": "^2.74.1",
     "rollup-plugin-typescript2": "^0.31.2",
     "vue": "^3.2.33"
+  },
+  "peerDependencies": {
+    "@layerhub-io/core": "*",
+    "@layerhub-io/objects": "*"
   },
   "devDependencies": {
     "@types/node": "^16.11.27",
