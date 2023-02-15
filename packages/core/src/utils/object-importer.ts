@@ -151,7 +151,7 @@ class ObjectImporter {
         const element = new fabric.BackgroundImage(image, {
           ...baseOptions,
           cropX: cropX || 0,
-          cropY: cropY || 0,
+          cropY: cropY || 0
         })
 
         updateObjectBounds(element, options)
@@ -334,11 +334,9 @@ class ObjectImporter {
     } = item as Required<ILayer>
     let metadata = item.metadata ? item.metadata : {}
     const { fill } = metadata
-    console.log(
-      `getBaseOptions: ${type} ${name} ${id} ${left} ${top} ${width} ${height} ${scaleX} ${scaleY} ${stroke} ${strokeWidth} ${angle} ${opacity} ${flipX} ${flipY} ${skewX} ${skewY} ${originX} ${originY} ${type} ${preview} ${fill}`
-    )
+    console.log(`getBaseOptions: ${type} ${name} ${id}`)
     let baseOptions = {
-      id: id ? id : nanoid(),
+      id: id ? this.editor.objects.getUniqueId(id) : this.editor.objects.getUniqueId(nanoid()),
       name: name ? this.editor.objects.getUniqueName(name) : this.editor.objects.getUniqueName(type),
       angle: angle ? angle : 0,
       top: inGroup ? top : options.top + top,

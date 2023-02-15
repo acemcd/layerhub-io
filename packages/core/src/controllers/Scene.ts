@@ -24,11 +24,11 @@ class Scene extends Base {
       layers: [],
       frame: {
         width: frame.width,
-        height: frame.height,
+        height: frame.height
       },
       metadata: {
-        animated,
-      },
+        animated
+      }
     }
 
     const layers = canvasJSON.objects.filter((object: any) => object.type !== LayerType.FRAME)
@@ -40,7 +40,7 @@ class Scene extends Base {
     })
     template.metadata = {
       ...template.metadata,
-      animated,
+      animated
     }
     return template
   }
@@ -58,7 +58,7 @@ class Scene extends Base {
         // @ts-ignore
         const objects = activeObject._objects
         for (const object of objects!) {
-          const cloned = await new Promise((resolve) => {
+          const cloned = await new Promise(resolve => {
             object.clone((c: fabric.Object) => {
               c.clipPath = undefined
               resolve(c)
@@ -68,8 +68,8 @@ class Scene extends Base {
         }
 
         const group = new fabric.Group(clonedObjects)
-        const jsonStr = group.toJSON(this.editor.config.propertiesToInclude
-        const component = objectExporter.export(jsonStr), frame) as any
+        const jsonStr = group.toJSON(this.editor.config.propertiesToInclude) as any
+        const component = objectExporter.export(jsonStr, frame) as any
         const metadata = component.metadata ? component.metadata : {}
 
         return {
@@ -79,11 +79,12 @@ class Scene extends Base {
           metadata: {
             ...metadata,
             category: isMixed ? "mixed" : "single",
-            types: selectionType,
-          },
+            types: selectionType
+          }
         }
       } else {
-        const component = objectExporter.export(activeObject.toJSON(this.editor.config.propertiesToInclude), frame)
+        const jsonStr = activeObject.toJSON(this.editor.config.propertiesToInclude) as any
+        const component = objectExporter.export(jsonStr, frame)
         const metadata = component.metadata ? component.metadata : {}
         return {
           ...component,
@@ -92,8 +93,8 @@ class Scene extends Base {
           metadata: {
             ...metadata,
             category: isMixed ? "mixed" : "single",
-            types: selectionType,
-          },
+            types: selectionType
+          }
         }
       }
     }
@@ -115,11 +116,11 @@ class Scene extends Base {
           duration: 5000,
           display: {
             from: 0,
-            to: 5000,
+            to: 5000
           },
           cut: {
             from: 0,
-            to: 0,
+            to: 0
           },
           position: {
             x: layer.left,
@@ -128,9 +129,9 @@ class Scene extends Base {
             width: layer.width,
             height: layer.height,
             scaleX: layer.scaleX,
-            scaleY: layer.scaleY,
+            scaleY: layer.scaleY
           },
-          objectId: layer.id,
+          objectId: layer.id
         })
       } else {
         // @ts-ignore
@@ -143,11 +144,11 @@ class Scene extends Base {
           duration: 5000,
           display: {
             from: 0,
-            to: 5000,
+            to: 5000
           },
           cut: {
             from: 0,
-            to: 0,
+            to: 0
           },
           position: {
             x: layer.left,
@@ -156,9 +157,9 @@ class Scene extends Base {
             width: layer.width,
             height: layer.height,
             scaleX: layer.scaleX,
-            scaleY: layer.scaleY,
+            scaleY: layer.scaleY
           },
-          objectId: layer.id,
+          objectId: layer.id
         })
       }
     }
@@ -176,16 +177,16 @@ class Scene extends Base {
     this.editor.objects.clear()
     this.editor.frame.resize({
       width: frameParams.width,
-      height: frameParams.height,
+      height: frameParams.height
     })
 
     const frame = this.editor.frame.frame as any
     const objectImporter = new ObjectImporter(this.editor)
-    const updatedTemplateLayers = template.layers.map((layer) => {
+    const updatedTemplateLayers = template.layers.map(layer => {
       if (layer.type === LayerType.BACKGROUND) {
         return {
           ...layer,
-          shadow: this.config.shadow,
+          shadow: this.config.shadow
         }
       }
       return layer
@@ -194,7 +195,7 @@ class Scene extends Base {
       const element = await objectImporter.import(layer, frame)
       if (element) {
         if (this.config.clipToFrame) {
-          element.clipPath = frame as unknown as fabric.Object
+          element.clipPath = (frame as unknown) as fabric.Object
         }
         this.canvas.add(element)
       } else {

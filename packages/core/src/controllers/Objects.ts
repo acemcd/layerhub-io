@@ -26,18 +26,18 @@ class Objects extends Base {
     }
 
     const isBackgroundImage = refItem.type === LayerType.BACKGROUND_IMAGE
-    let currentBackgrounImage: any
+    let currentBackgroundImage: any
     if (isBackgroundImage) {
-      currentBackgrounImage = await this.unsetBackgroundImage()
+      currentBackgroundImage = await this.unsetBackgroundImage()
     }
 
     if (isBackgroundImage) {
       canvas.add(object)
       object.moveTo(2)
       this.scale("fill", object.id)
-      if (currentBackgrounImage) {
-        canvas.add(currentBackgrounImage)
-        this.sendToBack(currentBackgrounImage.id)
+      if (currentBackgroundImage) {
+        canvas.add(currentBackgroundImage)
+        this.sendToBack(currentBackgroundImage.id)
       }
     } else {
       canvas.add(object)
@@ -747,7 +747,7 @@ class Objects extends Base {
       const currentBackgroundImage = objects.find(o => o.type === LayerType.BACKGROUND_IMAGE)
       let nextImage: fabric.StaticImage
       if (currentBackgroundImage) {
-        const currentBackgroundImageJSON = currentBackgroundImage.toJSON(this.config.propertiesToInclude)
+        const currentBackgroundImageJSON = currentBackgroundImage.toJSON(this.config.propertiesToInclude) as any
         delete currentBackgroundImageJSON.clipPath
         const nextImageElement = await loadImageFromURL(currentBackgroundImageJSON.src)
         nextImage = new fabric.StaticImage(nextImageElement, { ...currentBackgroundImageJSON, id: nanoid() })
@@ -774,7 +774,7 @@ class Objects extends Base {
         // @ts-ignore
         this.canvas.add(nextImage)
       }
-      const objectJSON = refObject.toJSON(this.config.propertiesToInclude)
+      const objectJSON = refObject.toJSON(this.config.propertiesToInclude) as any
       delete objectJSON.clipPath
       const image = await loadImageFromURL(objectJSON.src)
       const backgroundImage = new fabric.BackgroundImage(image, { ...objectJSON, id: nanoid() })
@@ -960,6 +960,23 @@ class Objects extends Base {
       this.canvas.requestRenderAll()
       this.editor.history.save()
     }
+  }
+
+  public getUniqueId = (itemId?: string) => {
+    const objects = this.canvas.getObjects()
+    const ids = objects.map(o => o.id)
+    if (itemId) {
+      // check if id is unique
+      if (!ids.includes(itemId)) {
+        return itemId
+      }
+    }
+    // generate unique id
+    let id = nanoid()
+    while (ids.includes(id)) {
+      id = nanoid()
+    }
+    return id
   }
 
   public getUniqueName = (itemName: string) => {

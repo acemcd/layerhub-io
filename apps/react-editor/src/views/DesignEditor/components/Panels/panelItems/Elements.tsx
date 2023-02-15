@@ -8,13 +8,14 @@ import Scrollable from "~/components/Scrollable"
 import { graphics } from "~/constants/mock-data"
 import useSetIsSidebarOpen from "~/hooks/useSetIsSidebarOpen"
 
-export default function () {
+export default function() {
   const editor = useEditor()
   const setIsSidebarOpen = useSetIsSidebarOpen()
 
   const addObject = React.useCallback(
     (item: any) => {
       if (editor) {
+        console.log({ item })
         editor.objects.add(item)
       }
     },
@@ -29,7 +30,7 @@ export default function () {
           alignItems: "center",
           fontWeight: 500,
           justifyContent: "space-between",
-          padding: "1.5rem",
+          padding: "1.5rem"
         }}
       >
         <Block>Elements</Block>
@@ -78,8 +79,8 @@ function ImageItem({ preview, onClick }: { preview: any; onClick?: (option: any)
         overflow: "hidden",
         ":hover": {
           opacity: 1,
-          background: "rgb(233,233,233)",
-        },
+          background: "rgb(233,233,233)"
+        }
       })}
     >
       <img
@@ -89,7 +90,7 @@ function ImageItem({ preview, onClick }: { preview: any; onClick?: (option: any)
           height: "100%",
           objectFit: "contain",
           pointerEvents: "none",
-          verticalAlign: "middle",
+          verticalAlign: "middle"
         })}
       />
     </div>
