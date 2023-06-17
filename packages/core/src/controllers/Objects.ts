@@ -42,10 +42,13 @@ class Objects extends Base {
     } else {
       canvas.add(object)
       object.center()
+      object.scaleToHeight(canvas.height!)
+      // this.scale("fit", object.id)
     }
 
     this.state.setActiveObject(object)
     canvas.setActiveObject(object)
+    object.scaleToHeight(canvas.height!)
 
     this.updateContextObjects()
     this.editor.history.save()

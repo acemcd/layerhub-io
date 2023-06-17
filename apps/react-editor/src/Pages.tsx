@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React from "react"
-import { LightTheme, ThemeProvider } from "baseui"
+import { LightTheme, DarkTheme, ThemeProvider } from "baseui"
 import { Drawer, SIZE } from "baseui/drawer"
 import { Button, KIND } from "baseui/button"
 import { useSelector } from "react-redux"
@@ -17,12 +17,12 @@ export default function Pages() {
     dispatch(
       addPage({
         id: nanoid(),
-        name: "New page",
+        name: "New page"
       })
     )
   }
   return (
-    <ThemeProvider theme={LightTheme}>
+    <ThemeProvider theme={DarkTheme}>
       <Button
         onClick={() => setIsOpen(true)}
         kind={KIND.secondary}
@@ -31,7 +31,7 @@ export default function Pages() {
           bottom: "20px",
           right: "20px",
           zIndex: 1,
-          display: isOpen ? "none" : "block",
+          display: isOpen ? "none" : "block"
         }}
       >
         Pages
@@ -43,7 +43,7 @@ export default function Pages() {
             width: "100%",
             display: "flex",
             flexDirection: "column",
-            justifyContent: "space-between",
+            justifyContent: "space-between"
           }}
         >
           <div style={{ display: "grid", gap: "1rem", padding: "1rem 0" }}>
@@ -56,7 +56,7 @@ export default function Pages() {
                     border: "1px solid gray",
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: "center",
+                    justifyContent: "center"
                   }}
                   key={page.id}
                 >

@@ -1,14 +1,14 @@
 import "../../styles/globals.css"
 import type { AppProps } from "next/app"
 import { Provider as StyletronProvider } from "styletron-react"
-import { LightTheme, BaseProvider } from "baseui"
+import { LightTheme, BaseProvider, DarkTheme } from "baseui"
 import { styletron } from "../styletron"
 import { Provider as ScenifyProvider } from "@layerhub-io/react"
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <StyletronProvider value={styletron}>
-      <BaseProvider theme={LightTheme}>
+      <BaseProvider theme={DarkTheme}>
         <ScenifyProvider>
           <Component {...pageProps} />
         </ScenifyProvider>

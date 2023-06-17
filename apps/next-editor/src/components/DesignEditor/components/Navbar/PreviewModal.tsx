@@ -1,13 +1,13 @@
 import React from "react"
 import { Modal, ROLE, SIZE } from "baseui/modal"
-import { ThemeProvider, LightTheme } from "baseui"
+import { ThemeProvider, LightTheme, DarkTheme } from "baseui"
 import { useEditor } from "@layerhub-io/react"
 
 interface Props {
   isOpen: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
-export default function ({ isOpen, setIsOpen }: Props) {
+export default function({ isOpen, setIsOpen }: Props) {
   const editor = useEditor()
   const [previewImage, setPreviewImage] = React.useState<any>(null)
 
@@ -20,7 +20,7 @@ export default function ({ isOpen, setIsOpen }: Props) {
     renderImage()
   }, [])
   return (
-    <ThemeProvider theme={LightTheme}>
+    <ThemeProvider theme={DarkTheme}>
       <Modal
         onClose={() => setIsOpen(false)}
         closeable={true}
@@ -31,7 +31,7 @@ export default function ({ isOpen, setIsOpen }: Props) {
         role={ROLE.dialog}
         overrides={{
           Close: {
-            component: () => null,
+            component: () => null
           },
           Dialog: {
             style: {
@@ -40,9 +40,9 @@ export default function ({ isOpen, setIsOpen }: Props) {
               borderEndEndRadius: "8px",
               borderStartEndRadius: "8px",
               borderStartStartRadius: "8px",
-              padding: "0.5rem",
-            },
-          },
+              padding: "0.5rem"
+            }
+          }
         }}
       >
         <img style={{ maxWidth: "1200px" }} src={previewImage} alt="preview" />

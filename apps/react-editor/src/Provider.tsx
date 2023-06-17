@@ -2,7 +2,7 @@ import React from "react"
 import { Provider as ScenifyProvider } from "@layerhub-io/react"
 import { Client as Styletron } from "styletron-engine-atomic"
 import { Provider as StyletronProvider } from "styletron-react"
-import { BaseProvider, LightTheme } from "baseui"
+import { BaseProvider, LightTheme, DarkTheme } from "baseui"
 import { store } from "./store/store"
 import { Provider } from "react-redux"
 import { AppProvider } from "./contexts/AppContext"
@@ -14,7 +14,7 @@ import "./translations"
 
 const engine = new Styletron()
 
-export default function ({ children }: { children: React.ReactNode }) {
+export default function({ children }: { children: React.ReactNode }) {
   return (
     <Provider store={store}>
       <DesignEditorProvider>
@@ -22,7 +22,7 @@ export default function ({ children }: { children: React.ReactNode }) {
           <AppProvider>
             <ScenifyProvider>
               <StyletronProvider value={engine}>
-                <BaseProvider theme={LightTheme}>
+                <BaseProvider theme={DarkTheme}>
                   <I18nextProvider i18n={i18next}>{children}</I18nextProvider>
                 </BaseProvider>
               </StyletronProvider>
